@@ -1,5 +1,7 @@
-MeshHistogram
+MeshEditer
 =============
+This programme includes reading different formats of 3D data, removing duplicate vertices, and computing the histogram for a 3D model.
+
 Compile and run "MeshHistogram/histogram/OpenGLTestOnMFC.sln".   
 "LoadMesh": Load mesh by ".obj", ".off", ".ply" .etc  
 "AddNoise": Add random Gaussian noise to mesh vertices.  
