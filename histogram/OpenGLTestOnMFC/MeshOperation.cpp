@@ -204,7 +204,7 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 		max_Pts,			// number of points
 		dim);
 
-	double threshold = 0.01;
+	double threshold = 0.0001;
 	int counter = 0;
 
 	for(MyMesh::VertexIter v_it = mesh.vertices_begin();v_it!=mesh.vertices_end();v_it++)
@@ -219,7 +219,7 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 			dists,				// distance (returned)
 			eps);
 
-		if(*dists<threshold)
+		if(*dists>threshold)
 		{
 			MyMesh::VertexHandle nvh_it = mesh.vertex_handle(counter);
 			MyMesh::Point temp = mesh.point(v_it);
