@@ -217,8 +217,13 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 			nnIdx,				// nearest neighbors (returned)
 			dists,				// distance (returned)
 			eps);
+<<<<<<< HEAD
 		
 		if(*(dists+1)>=threshold)
+=======
+
+		if(*dists>threshold)
+>>>>>>> 418a764246b12a56f82176fde6b9d1f7df8ca81b
 		{
 			MyMesh::VertexHandle nvh_it = mesh.vertex_handle(counter);
 			MyMesh::Point temp = mesh.point(v_it);
