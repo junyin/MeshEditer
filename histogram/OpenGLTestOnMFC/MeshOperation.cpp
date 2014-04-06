@@ -17,9 +17,9 @@ using namespace std; // make std:: accessible
 //kd tree
 // Global variables
 //
-int k = 2;					// number of nearest neighbors
-int dim = 3;				// dimension
-double eps = 0;				// error bound
+int k = 2;			// number of nearest neighbors
+int dim = 3;			// dimension
+double eps = 0;			// error bound
 istream* dataIn = NULL;		// input for data points
 istream* queryIn = NULL;	// input for query points
 
@@ -51,10 +51,10 @@ void AddNoise(double noise_standard_deviation,MyMesh &mesh)
 //{
 //	/*ANN kd-tree find nearest point*/
 //	ANNpointArray	meshArray;		
-//	ANNpoint		Pt;				// ANN point
+//	ANNpoint		Pt;			// ANN point
 //	ANNpoint		queryPt;		// query point
 //	ANNidxArray		nnIdx;			// near neighbor indices
-//	ANNdistArray	dists;			// near neighbor distances
+//	ANNdistArray		dists;			// near neighbor distances
 //	ANNkd_tree*		kdTree;	
 //
 //	nnIdx = new ANNidx[k];			// allocate near neigh indices
@@ -84,8 +84,8 @@ void AddNoise(double noise_standard_deviation,MyMesh &mesh)
 //
 //	//build kd-tree
 //	kdTree = new ANNkd_tree(// build search structure
-//		meshArray,			// the data points
-//		max_Pts,			// number of points
+//		meshArray,	// the data points
+//		max_Pts,	// number of points
 //		dim);
 //
 //	double threshold = 0.00001;
@@ -109,11 +109,11 @@ void AddNoise(double noise_standard_deviation,MyMesh &mesh)
 //	//	queryPt=meshArray[indx];
 //
 //	//	kdTree->annkSearch(		// search
-//	//		queryPt,			// query point
-//	//		k,					// number of near neighbors
-//	//		nnIdx,				// nearest neighbors (returned)
-//	//		dists,				// distance (returned)
-//	//		eps);				// error bound
+//	//		queryPt,		// query point
+//	//		k,			// number of near neighbors
+//	//		nnIdx,			// nearest neighbors (returned)
+//	//		dists,			// distance (returned)
+//	//		eps);			// error bound
 //
 //	//	if(*dists <= threshold)
 //	//	{
@@ -146,10 +146,10 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 {
 	/*ANN kd-tree find nearest point*/
 	ANNpointArray	meshArray;		
-	ANNpoint		Pt;				// ANN point
-	ANNpoint		queryPt;		// query point
-	ANNidxArray		nnIdx;			// near neighbor indices
-	ANNdistArray	dists;			// near neighbor distances
+	ANNpoint		Pt;		// ANN point
+	ANNpoint		queryPt;	// query point
+	ANNidxArray		nnIdx;		// near neighbor indices
+	ANNdistArray		dists;		// near neighbor distances
 	ANNkd_tree*		kdTree;	
 
 	nnIdx = new ANNidx[k];			// allocate near neigh indices
@@ -212,10 +212,10 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 		queryPt=meshArray[indx];
 
 		kdTree->annkSearch(		// search
-			queryPt,			// query point
-			k,					// number of near neighbors
-			nnIdx,				// nearest neighbors (returned)
-			dists,				// distance (returned)
+			queryPt,		// query point
+			k,			// number of near neighbors
+			nnIdx,			// nearest neighbors (returned)
+			dists,			// distance (returned)
 			eps);
 
 		
@@ -282,7 +282,6 @@ void Normalizer(MyMesh &mesh)
 		{
 			*(mesh.point(v_it).data()+d) /= max_distance;
 		}
-
 	}
 	NORMALIZE_CONTROL = FALSE;
 }
