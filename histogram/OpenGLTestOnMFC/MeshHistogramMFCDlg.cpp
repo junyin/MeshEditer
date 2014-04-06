@@ -44,10 +44,6 @@ END_MESSAGE_MAP()
 
 
 // CMeshHistogramMFCDlg dialog
-
-
-
-
 CMeshHistogramMFCDlg::CMeshHistogramMFCDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CMeshHistogramMFCDlg::IDD, pParent)
 {
@@ -67,11 +63,7 @@ BEGIN_MESSAGE_MAP(CMeshHistogramMFCDlg, CDialog)
 	ON_WM_SIZE()
 	ON_WM_TIMER()
 	ON_BN_CLICKED(Load, &CMeshHistogramMFCDlg::OnBnClickedLoad)
-	//ON_BN_CLICKED(Align, &CMeshHistogramMFCDlg::OnBnClickedAlign)
 	ON_BN_CLICKED(Noise, &CMeshHistogramMFCDlg::OnBnClickedNoise)
-	//ON_BN_CLICKED(RotateX, &CMeshHistogramMFCDlg::OnBnClickedRotatex)
-	//ON_BN_CLICKED(RotateY, &CMeshHistogramMFCDlg::OnBnClickedRotatey)
-	//ON_BN_CLICKED(RotateZ, &CMeshHistogramMFCDlg::OnBnClickedRotatez)
 	ON_BN_CLICKED(Normalize, &CMeshHistogramMFCDlg::OnBnClickedNormalize)
 	ON_BN_CLICKED(MeshHistogram, &CMeshHistogramMFCDlg::OnBnClickedMeshhistogram)
 	ON_BN_CLICKED(VRMLExport, &CMeshHistogramMFCDlg::OnBnClickedVrmlexport)
@@ -80,7 +72,6 @@ END_MESSAGE_MAP()
 
 
 // CMeshHistogramMFCDlg message handlers
-
 BOOL CMeshHistogramMFCDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -215,8 +206,6 @@ void CMeshHistogramMFCDlg::OnSize(UINT nType, int cx, int cy)
 void CMeshHistogramMFCDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: Add your message handler code here and/or call default
-
-
 	CDialog::OnTimer(nIDEvent);
 }
 
@@ -246,29 +235,29 @@ void CMeshHistogramMFCDlg::OnBnClickedLoad()
 	}
 	meshQueue.reserve(10);
 	meshQueue.push_back(mesh);
-
-	//ALIGN_CONTROL = false;
-	//ROTATE_CONTROL = 0;
+	PLOT_CONTROL=1;
 }
 
 
 void CMeshHistogramMFCDlg::OnBnClickedNoise()
 {
 	NOISE_CONTROL = true;
-	//ALIGN_CONTROL = false;
-	//ROTATE_CONTROL = 0;
+}
+
+void CMeshHistogramMFCDlg::OnBnClickedRemovedv()
+{
+	REMOVE_CONTROL=true;
 }
 
 void CMeshHistogramMFCDlg::OnBnClickedNormalize()
 {
 	NORMALIZE_CONTROL = true;
-	//ALIGN_CONTROL = false;
 }
 
 void CMeshHistogramMFCDlg::OnBnClickedMeshhistogram()
 {
 	HISTOGRAM_CONTROL = true;
-	//ALIGN_CONTROL = false;
+	PLOT_CONTROL+=1;
 }
 
 
@@ -276,11 +265,6 @@ void CMeshHistogramMFCDlg::OnBnClickedVrmlexport()
 {
 	unsigned int meshsize = meshQueue.size();
 	VRMLTranslator(meshQueue.at(meshsize-1));
-	//ALIGN_CONTROL = false;
 }
 
 
-void CMeshHistogramMFCDlg::OnBnClickedRemovedv()
-{
-	REMOVE_CONTROL=true;
-}

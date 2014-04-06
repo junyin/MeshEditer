@@ -15,8 +15,6 @@
 //#include <wrap/io_trimesh/export_vrml.h>
 //#include <IO/Export/vtkVRMLExporter.h>
 //#include <IO/Export/vtkExporter.h>
-//#include "Rendering/Core/vtkRenderer.h"
-//#include "Common/DataModel/vtkDataSet.h"
 
 struct MyTraits : public OpenMesh::DefaultTraits
 {
@@ -36,20 +34,12 @@ struct MyTraits : public OpenMesh::DefaultTraits
 //};
 
 //using namespace vcg;
-
+//typedef vtkVRMLExporter::Superclass vtkExporter;
 using namespace std;
-
 
 typedef OpenMesh::PolyMesh_ArrayKernelT<>  MyMesh;
 
-//typedef vtkVRMLExporter::Superclass vtkExporter;
-
-//void MeshAlign(MyMesh &target_mesh, MyMesh &source_mesh);
-//void getsampledAnnArray(size_t sample_Pts,int sample_ratio,MyMesh &mesh,ANNpointArray &dataArray);
-//void RotateMesh(double rotate_theta,MyMesh &mesh);
 void AddNoise(double noise_standard_deviation,MyMesh &mesh);
-double FindMaxDistance(MyMesh &mesh);
-//void RemoveSameVertices(MyMesh &mesh);
 void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh);
 void Normalizer(MyMesh &mesh);
 void GenMeshHistogram(MyMesh &mesh, double *mesh_histogram);

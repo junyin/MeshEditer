@@ -9,20 +9,20 @@
 // CMeshHistogramMFCDlg dialog
 class CMeshHistogramMFCDlg : public CDialog
 {
-// Construction
+	// Construction
 public:
 	CMeshHistogramMFCDlg(CWnd* pParent = NULL);	// standard constructor
 
 	COpenGLControl m_oglWindow;
 
-// Dialog Data
+	// Dialog Data
 	enum { IDD = IDD_MeshHistogramMFC_DIALOG };
 
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
 
 
-// Implementation
+	// Implementation
 protected:
 	HICON m_hIcon;
 
@@ -31,7 +31,7 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
-	
+
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);

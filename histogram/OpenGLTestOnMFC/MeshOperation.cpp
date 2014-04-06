@@ -17,7 +17,7 @@ using namespace std; // make std:: accessible
 //kd tree
 // Global variables
 //
-int k = 1;					// number of nearest neighbors
+int k = 2;					// number of nearest neighbors
 int dim = 3;				// dimension
 double eps = 0;				// error bound
 istream* dataIn = NULL;		// input for data points
@@ -36,7 +36,7 @@ void AddNoise(double noise_standard_deviation,MyMesh &mesh)
 		{
 			Pt[d]=*(mesh.point(it).data()+d);
 			double randn = distribution(generator);
-			if ((randn>=-1.0)&&(randn<=1.0))							        //Gaussian distribution range [-1.0,1.0]
+			if ((randn>=-1.0)&&(randn<=1.0))//Gaussian distribution range [-1.0,1.0]							        
 			{
 				Pt[d]= Pt[d]*(1.0+randn);
 				*(mesh.point(it).data()+d)=float(Pt[d]);
@@ -47,114 +47,113 @@ void AddNoise(double noise_standard_deviation,MyMesh &mesh)
 }
 
 /*removes all duplicate vertices (such that the model stays the same)*/
-void RemoveSameVertices(MyMesh &mesh)
-{
-	/*ANN kd-tree find nearest point*/
-	ANNpointArray	meshArray;		
-	ANNpoint		Pt;				// query point
-	ANNpoint		queryPt;		// match point
-	ANNidxArray		nnIdx;			// near neighbor indices
-	ANNdistArray	dists;			// near neighbor distances
-	ANNkd_tree*		kdTree;	
-
-	nnIdx = new ANNidx[k];					// allocate near neigh indices
-	dists = new ANNdist[k];	
-
-	int max_Pts = mesh.n_vertices();
-	meshArray = annAllocPts(max_Pts, dim);
-	queryPt = annAllocPt(dim);
-	Pt = annAllocPt(dim);
-
-	//align mesh vertices to ANNArray for building kd-tree
-	for (MyMesh::VertexIter v_it=mesh.vertices_begin();v_it!=mesh.vertices_end();++v_it)
-	{
-		int index = v_it->idx();
-		//Pt get the space of data array
-		Pt = meshArray[index];
-		double getPt[3] = {};
-
-		for(int d = 0;d < dim; d++)
-		{
-			getPt[d] = *(mesh.point(v_it).data()+d);
-			Pt[d] = getPt[d];
-		}
-		//assign Pt coordinates to data array
-		meshArray[index] = Pt;
-	}
-
-	//build kd-tree
-	kdTree = new ANNkd_tree(// build search structure
-		meshArray,			// the data points
-		max_Pts,			// number of points
-		dim);
-
-	double threshold = 0.00001;
-
-	MyMesh::VertexIter v_it=mesh.vertices_begin();
-	MyMesh::VertexHandle vh_it =  v_it.handle();
-
-	if (!mesh.has_vertex_status())
-		mesh.request_vertex_status();
-	if(!mesh.has_face_status()) 
-		mesh.request_face_status();
-	if(!mesh.has_edge_status())
-		mesh.request_edge_status();
-
-	mesh.delete_vertex(vh_it,false);
-
-
-
-	//for (MyMesh::VertexIter v_it=mesh.vertices_begin();v_it!=mesh.vertices_end();v_it++)
-	//{
-	//	int indx = v_it->idx();
-	//	queryPt=meshArray[indx];
-
-	//	kdTree->annkSearch(		// search
-	//		queryPt,			// query point
-	//		k,					// number of near neighbors
-	//		nnIdx,				// nearest neighbors (returned)
-	//		dists,				// distance (returned)
-	//		eps);				// error bound
-
-	//	if(*dists <= threshold)
-	//	{
-	//		MyMesh::VertexHandle vh_it =  mesh.vertex_handle(*nnIdx);
-	//		//mesh.delete_vertex(vh_it, false);
-	//		//true if element handle is marked as deleted
-	//		mesh.status(vh_it).deleted();
-	//		mesh.delete_vertex(vh_it, false);
-	//	}
-	//}
-
-	// Delete all elements that are marked as deleted from memory.
-	mesh.garbage_collection();
-
-	if (mesh.has_vertex_status())
-		mesh.release_vertex_status();
-	if(mesh.has_face_status())
-		mesh.release_face_status();
-	if(mesh.has_edge_status())
-		mesh.release_edge_status();
-	// clean kd-tree
-	delete [] nnIdx; 
-	delete [] dists;
-	delete kdTree;
-	annClose(); 
-}
+//void RemoveSameVertices(MyMesh &mesh)
+//{
+//	/*ANN kd-tree find nearest point*/
+//	ANNpointArray	meshArray;		
+//	ANNpoint		Pt;				// ANN point
+//	ANNpoint		queryPt;		// query point
+//	ANNidxArray		nnIdx;			// near neighbor indices
+//	ANNdistArray	dists;			// near neighbor distances
+//	ANNkd_tree*		kdTree;	
+//
+//	nnIdx = new ANNidx[k];			// allocate near neigh indices
+//	dists = new ANNdist[k];			// allocate near neigh distance
+//
+//	int max_Pts = mesh.n_vertices();
+//	meshArray = annAllocPts(max_Pts, dim);
+//	queryPt = annAllocPt(dim);
+//	Pt = annAllocPt(dim);
+//
+//	//align mesh vertices to ANNArray for building kd-tree
+//	for (MyMesh::VertexIter v_it=mesh.vertices_begin();v_it!=mesh.vertices_end();++v_it)
+//	{
+//		int index = v_it->idx();
+//		//Pt get the space of data array
+//		Pt = meshArray[index];
+//		double getPt[3] = {};
+//
+//		for(int d = 0;d < dim; d++)
+//		{
+//			getPt[d] = *(mesh.point(v_it).data()+d);
+//			Pt[d] = getPt[d];
+//		}
+//		//assign Pt coordinates to data array
+//		meshArray[index] = Pt;
+//	}
+//
+//	//build kd-tree
+//	kdTree = new ANNkd_tree(// build search structure
+//		meshArray,			// the data points
+//		max_Pts,			// number of points
+//		dim);
+//
+//	double threshold = 0.00001;
+//
+//	MyMesh::VertexIter v_it = mesh.vertices_begin();
+//	MyMesh::VertexHandle vh_it =  v_it.handle();
+//
+//	/*Test*/
+//	if (!mesh.has_vertex_status())
+//		mesh.request_vertex_status();
+//	if(!mesh.has_face_status()) 
+//		mesh.request_face_status();
+//	if(!mesh.has_edge_status())
+//		mesh.request_edge_status();
+//
+//	mesh.delete_vertex(vh_it,false);
+//
+//	//for (MyMesh::VertexIter v_it=mesh.vertices_begin();v_it!=mesh.vertices_end();v_it++)
+//	//{
+//	//	int indx = v_it->idx();
+//	//	queryPt=meshArray[indx];
+//
+//	//	kdTree->annkSearch(		// search
+//	//		queryPt,			// query point
+//	//		k,					// number of near neighbors
+//	//		nnIdx,				// nearest neighbors (returned)
+//	//		dists,				// distance (returned)
+//	//		eps);				// error bound
+//
+//	//	if(*dists <= threshold)
+//	//	{
+//	//		MyMesh::VertexHandle vh_it =  mesh.vertex_handle(*nnIdx);
+//	//		//mesh.delete_vertex(vh_it, false);
+//	//		//true if element handle is marked as deleted
+//	//		mesh.status(vh_it).deleted();
+//	//		mesh.delete_vertex(vh_it, false);
+//	//	}
+//	//}
+//
+//	// Delete all elements that are marked as deleted from memory.
+//	mesh.garbage_collection();
+//
+//	if (mesh.has_vertex_status())
+//		mesh.release_vertex_status();
+//	if(mesh.has_face_status())
+//		mesh.release_face_status();
+//	if(mesh.has_edge_status())
+//		mesh.release_edge_status();
+//	// clean kd-tree
+//	delete [] nnIdx; 
+//	delete [] dists;
+//	delete kdTree;
+//	annClose(); 
+//}
 
 /*removes all duplicate vertices (such that the model stays the same)*/
 void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 {
 	/*ANN kd-tree find nearest point*/
 	ANNpointArray	meshArray;		
-	ANNpoint		Pt;				// query point
-	ANNpoint		queryPt;		// match point
+	ANNpoint		Pt;				// ANN point
+	ANNpoint		queryPt;		// query point
 	ANNidxArray		nnIdx;			// near neighbor indices
 	ANNdistArray	dists;			// near neighbor distances
 	ANNkd_tree*		kdTree;	
 
-	nnIdx = new ANNidx[k];					// allocate near neigh indices
-	dists = new ANNdist[k];	
+	nnIdx = new ANNidx[k];			// allocate near neigh indices
+	dists = new ANNdist[k];			// allocate near neigh distance
 
 	int max_Pts = mesh.n_vertices();
 	meshArray = annAllocPts(max_Pts, dim);
@@ -204,7 +203,7 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 		max_Pts,			// number of points
 		dim);
 
-	double threshold = 0.01;
+	double threshold = 0.0001;
 	int counter = 0;
 
 	for(MyMesh::VertexIter v_it = mesh.vertices_begin();v_it!=mesh.vertices_end();v_it++)
@@ -218,8 +217,8 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 			nnIdx,				// nearest neighbors (returned)
 			dists,				// distance (returned)
 			eps);
-
-		if(*dists<threshold)
+		
+		if(*(dists+1)>=threshold)
 		{
 			MyMesh::VertexHandle nvh_it = mesh.vertex_handle(counter);
 			MyMesh::Point temp = mesh.point(v_it);
@@ -287,7 +286,7 @@ void Normalizer(MyMesh &mesh)
 	NORMALIZE_CONTROL = FALSE;
 }
 
-/*normalize the model and compute a histogram of the distances between them*/
+/*Normalize the model and compute a histogram of the distances between them*/
 void GenMeshHistogram(MyMesh &mesh,double *mesh_histogram)
 {
 	Normalizer(mesh);
@@ -335,13 +334,13 @@ void GenMeshHistogram(MyMesh &mesh,double *mesh_histogram)
 		}
 	}
 
+	//Normalize the histogram
 	double max_hist = mesh_histogram[0];
 	for (int i = 0; i <1733; i++)
 	{
 		if(max_hist < *(mesh_histogram+i))
 			max_hist = *(mesh_histogram+i);
 	}
-
 	for (int i = 0; i <1733; i++)
 	{
 		*(mesh_histogram+i)/=max_hist;

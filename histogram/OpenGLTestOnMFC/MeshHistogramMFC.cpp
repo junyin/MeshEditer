@@ -21,7 +21,7 @@ END_MESSAGE_MAP()
 
 CMeshHistogramMFCApp::CMeshHistogramMFCApp()
 {
-	
+
 	// Place all significant initialization in InitInstance
 }
 
@@ -57,12 +57,12 @@ BOOL CMeshHistogramMFCApp::InitInstance()
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
 	{
-		
+
 		//  dismissed with OK
 	}
 	else if (nResponse == IDCANCEL)
 	{
-		
+
 		//  dismissed with Cancel
 	}
 

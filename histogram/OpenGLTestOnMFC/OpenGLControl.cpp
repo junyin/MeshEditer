@@ -13,15 +13,13 @@ using namespace std;					 // make std:: accessible
 
 vector<MyMesh>  meshQueue;
 
-bool ALIGN_CONTROL = false;
 bool NOISE_CONTROL = false;
-int ROTATE_CONTROL = 0;
 bool NORMALIZE_CONTROL = false;
 bool HISTOGRAM_CONTROL = false;
 bool REMOVE_CONTROL = false;
 double noise_standard_deviation = 0.01;  //standard_deviation for adding noise
-double rotate_theta = 5*2*M_PI/360;		 //degree for rotating source mesh
 double mesh_histogram[1733] = {};
+int PLOT_CONTROL = 1;
 
 COpenGLControl::COpenGLControl(void)
 {
@@ -110,7 +108,6 @@ void COpenGLControl::OnSize(UINT nType, int cx, int cy)
 				// Store our old window as the new rect
 				m_oldWindow = m_rect;
 			}
-
 			break;
 		}
 	}
@@ -275,8 +272,8 @@ void COpenGLControl::oglDrawScene(void)
 
 	unsigned int meshsize = meshQueue.size();
 
-	//add noise to source mesh (mesh2)
-	if(NOISE_CONTROL && meshsize>=2)
+	//add noise to current mesh
+	if(NOISE_CONTROL && meshsize>=1)
 	{
 		AddNoise(noise_standard_deviation,meshQueue.at(meshsize-1));
 	}
@@ -286,22 +283,17 @@ void COpenGLControl::oglDrawScene(void)
 		MyMesh new_mesh;
 		RemoveSameVertices2(meshQueue.at(meshsize-1),new_mesh);
 		meshQueue.pop_back();
-		int a = meshQueue.size();
 		meshQueue.push_back(new_mesh);
-		int b = meshQueue.size();
-		int c = 0;
 	}
 
 	if(NORMALIZE_CONTROL && meshsize>=1)
 	{
 		Normalizer(meshQueue.at(meshsize-1));
 	}
-	if(HISTOGRAM_CONTROL && meshsize>=1)
+	if(HISTOGRAM_CONTROL && meshsize>=1 && PLOT_CONTROL % 2 == 0)
 	{
 		GenMeshHistogram(meshQueue.at(meshsize-1),mesh_histogram);
-		//double a = 1.0;
 	}
-
 
 	//draw meshes
 	for (unsigned int i=0;i<meshsize;i++)
@@ -335,7 +327,7 @@ void COpenGLControl::oglDrawScene(void)
 			}
 			glEnd();
 
-			if(mesh_histogram[0]>0)
+			if(mesh_histogram[0]>0 && PLOT_CONTROL % 2 == 0)
 			{
 				glBegin(GL_LINES);
 				glVertex3f(0.0,0.0,0.0);
