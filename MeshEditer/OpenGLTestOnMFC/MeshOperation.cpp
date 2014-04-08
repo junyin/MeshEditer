@@ -17,9 +17,9 @@ using namespace std; // make std:: accessible
 //kd tree
 // Global variables
 //
-int k = 2;					// number of nearest neighbors
-int dim = 3;				// dimension
-double eps = 0;				// error bound
+int k = 2;			// number of nearest neighbors
+int dim = 3;			// dimension
+double eps = 0;			// error bound
 istream* dataIn = NULL;		// input for data points
 istream* queryIn = NULL;	// input for query points
 
@@ -51,9 +51,9 @@ void RemoveSameVertices(MyMesh &mesh)
 {
 	/*ANN kd-tree find nearest point*/
 	ANNpointArray	meshArray;		
-	ANNpoint		Pt;				// ANN point
-	ANNpoint		queryPt;		// query point
-	ANNidxArray		nnIdx;			// near neighbor indices
+	ANNpoint		Pt;		// ANN point
+	ANNpoint		queryPt;	// query point
+	ANNidxArray		nnIdx;		// near neighbor indices
 	ANNdistArray	dists;			// near neighbor distances
 	ANNkd_tree*		kdTree;	
 
@@ -109,11 +109,11 @@ void RemoveSameVertices(MyMesh &mesh)
 		queryPt=meshArray[indx];
 
 		kdTree->annkSearch(		// search
-			queryPt,			// query point
-			k,					// number of near neighbors
-			nnIdx,				// nearest neighbors (returned)
-			dists,				// distance (returned)
-			eps);				// error bound
+			queryPt,		// query point
+			k,			// number of near neighbors
+			nnIdx,			// nearest neighbors (returned)
+			dists,			// distance (returned)
+			eps);			// error bound
 
 		if(*(dists+1) <= threshold)
 		{
@@ -145,9 +145,9 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 {
 	/*ANN kd-tree find nearest point*/
 	ANNpointArray	meshArray;		
-	ANNpoint		Pt;				// ANN point
-	ANNpoint		queryPt;		// query point
-	ANNidxArray		nnIdx;			// near neighbor indices
+	ANNpoint		Pt;		// ANN point
+	ANNpoint		queryPt;	// query point
+	ANNidxArray		nnIdx;		// near neighbor indices
 	ANNdistArray	dists;			// near neighbor distances
 	ANNkd_tree*		kdTree;	
 
@@ -211,10 +211,10 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 		queryPt=meshArray[indx];
 
 		kdTree->annkSearch(		// search
-			queryPt,			// query point
-			k,					// number of near neighbors
-			nnIdx,				// nearest neighbors (returned)
-			dists,				// distance (returned)
+			queryPt,		// query point
+			k,			// number of near neighbors
+			nnIdx,			// nearest neighbors (returned)
+			dists,			// distance (returned)
 			eps);
 
 
