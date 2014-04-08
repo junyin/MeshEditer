@@ -13,4 +13,4 @@ Compile and run "MeshHistogram/histogram/OpenGLTestOnMFC.sln".
 The relevant functions can be found in MeshOperation.cpp.
 
 P.S.
-In removing duplicate vertices, a best way is to use the function delete_vertex() in OpenMesh. However even following with the document <link>http://openmesh.org/Documentation/OpenMesh-2.0-Documentation/tutorial_07b.html</link>, it always has some error and memory leak. Therefore I used an alterative approach: create a new mesh and replace the current editing mesh to remove duplicate vertices.
+In removing duplicate vertices, both two method are wroking: use the function delete_vertex() in OpenMesh and create a new mesh and replace the current editing mesh to remove duplicate vertices.
