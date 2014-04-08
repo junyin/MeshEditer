@@ -206,7 +206,7 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 	double threshold = 0.0001;
 	int counter = 0;
 
-	for(MyMesh::VertexIter v_it = mesh.vertices_begin();v_it!=mesh.vertices_end();v_it++)
+	for(MyMesh::VertexIter v_it = mesh.vertices_begin();v_it!=mesh.vertices_end();++v_it)
 	{
 		int indx = v_it->idx();
 		queryPt=meshArray[indx];
