@@ -218,7 +218,7 @@ void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh)
 			dists,			// distance (returned)
 			eps);
 
-		
+
 		if(*(dists+1)>=threshold)
 		{
 			MyMesh::VertexHandle nvh_it = mesh.vertex_handle(counter);
@@ -350,13 +350,47 @@ void GenMeshHistogram(MyMesh &mesh,double *mesh_histogram)
 }
 
 /*writes the resulting file in the VRML V2.0 format*/
-void VRMLTranslator(MyMesh &mesh)
+void VRML2Writer(MyMesh &mesh,string filname)
 {
-	//vtkVRMLExporter *vrml = vtkVRMLExporter::New();
-	//vrml->SetRenderWindow(mesh);
-	//vrml->SetFileName("out.wrl");
-	//vrml->Write();
+	//delete ".off"
+	filname.erase(filname.end()-4,filname.end());
 
-	//int result = vcg::tri::io::ExporterWRL<CMeshO>::Save(m.cm,filename.c_str(),mask,cb); 
-
+	// open file
+	ofstream myfile;
+	myfile.open (filname+".wrl");
+	//write file header
+	if (myfile.is_open())
+	{
+		myfile << "#VRML V2.0 utf8\n";
+		myfile << "#Three IndexedFaceSets\n";
+		myfile << "Shape {\n";
+		myfile << "  geometry IndexedFaceSet {\n";
+		myfile << "    coord Coordinate {\n";
+		myfile << "      point [\n";
+		//write vertices
+		for(MyMesh::VertexIter v_it=mesh.vertices_begin();v_it!=mesh.vertices_end();++v_it)
+		{
+			myfile << "        "<< mesh.point(v_it).data()[0] << " " << mesh.point(v_it).data()[1] << " " <<mesh.point(v_it).data()[2]<< ",\n";
+		}
+		myfile << "      ]\n";
+		myfile << "    }\n";
+		myfile << "    coordIndex [\n";
+		//write faces
+		for(MyMesh::FaceIter f_it=mesh.faces_begin();f_it!=mesh.faces_end();++f_it)
+		{
+			
+			MyMesh::FaceVertexIter fv_it;
+			myfile << "      ";
+			for (fv_it = mesh.fv_iter(f_it);fv_it;++fv_it)
+			{
+				MyMesh::VertexHandle vh_it = fv_it.handle();				
+				myfile << vh_it.idx()<< " ";
+			}
+			myfile << ",\n";
+		}
+		myfile << "    ]\n";
+		myfile << "  }\n";
+		myfile << "}\n";
+		myfile.close();
+	}
 }

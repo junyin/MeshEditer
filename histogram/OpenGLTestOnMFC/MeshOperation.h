@@ -5,6 +5,9 @@
 #include <gl/glu.h>
 #include <vector>
 #include <ANN/ANN.h>
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 #undef min
 #undef max
@@ -12,6 +15,7 @@
 #include <OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh>
 #include <OpenMesh/Core/System/config.h>
 #include <OpenMesh/Core/Mesh/Status.hh>
+#include <OpenMesh/Core/IO/exporter/ExporterT.hh>
 //#include <wrap/io_trimesh/export_vrml.h>
 //#include <IO/Export/vtkVRMLExporter.h>
 //#include <IO/Export/vtkExporter.h>
@@ -43,5 +47,5 @@ void AddNoise(double noise_standard_deviation,MyMesh &mesh);
 void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh);
 void Normalizer(MyMesh &mesh);
 void GenMeshHistogram(MyMesh &mesh, double *mesh_histogram);
-void VRMLTranslator(MyMesh &mesh);
+void VRML2Writer(MyMesh &mesh,string FileName);
 

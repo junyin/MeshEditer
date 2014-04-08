@@ -13,6 +13,7 @@
 
 
 // CAboutDlg dialog used for App About
+char fileName[256]={0};
 
 class CAboutDlg : public CDialog
 {
@@ -219,7 +220,7 @@ void CMeshHistogramMFCDlg::OnBnClickedLoad()
 
 	MyMesh mesh;
 
-	char fileName[256]={0};
+	/*char fileName[256]={0};*/
 	sprintf_s(fileName,"%s\0",dlg.GetPathName());
 
 	try
@@ -264,7 +265,7 @@ void CMeshHistogramMFCDlg::OnBnClickedMeshhistogram()
 void CMeshHistogramMFCDlg::OnBnClickedVrmlexport()
 {
 	unsigned int meshsize = meshQueue.size();
-	VRMLTranslator(meshQueue.at(meshsize-1));
+	VRML2Writer(meshQueue.at(meshsize-1),fileName);
 }
 
 
