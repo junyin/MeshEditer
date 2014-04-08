@@ -108,7 +108,7 @@ BEGIN
     PUSHBUTTON      "AddNoise",Noise,31,290,57,14
     PUSHBUTTON      "Normalize",Normalize,103,290,60,14
     PUSHBUTTON      "MeshHistogram",MeshHistogram,179,270,60,14
-    PUSHBUTTON      "VRMLExport",VRMLExport,179,289,59,14
+    PUSHBUTTON      "VRMLExport",VRMLExport,179,289,59,14,BS_CENTER | NOT WS_VISIBLE
     PUSHBUTTON      "RemoveDV",RemoveDV,104,270,58,14
 END
 

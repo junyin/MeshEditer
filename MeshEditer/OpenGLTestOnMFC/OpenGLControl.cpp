@@ -279,11 +279,11 @@ void COpenGLControl::oglDrawScene(void)
 	}
 	if(REMOVE_CONTROL && meshsize>=1)
 	{
-		//RemoveSameVertices(meshQueue.at(meshsize-1));
-		MyMesh new_mesh;
+		RemoveSameVertices(meshQueue.at(meshsize-1));
+		/*MyMesh new_mesh;
 		RemoveSameVertices2(meshQueue.at(meshsize-1),new_mesh);
 		meshQueue.pop_back();
-		meshQueue.push_back(new_mesh);
+		meshQueue.push_back(new_mesh);*/
 	}
 
 	if(NORMALIZE_CONTROL && meshsize>=1)

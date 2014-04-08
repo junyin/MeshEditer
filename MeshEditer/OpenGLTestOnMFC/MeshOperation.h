@@ -45,6 +45,7 @@ typedef OpenMesh::PolyMesh_ArrayKernelT<>  MyMesh;
 
 void AddNoise(double noise_standard_deviation,MyMesh &mesh);
 void RemoveSameVertices2(MyMesh &mesh,MyMesh &new_mesh);
+void RemoveSameVertices(MyMesh &mesh);
 void Normalizer(MyMesh &mesh);
 void GenMeshHistogram(MyMesh &mesh, double *mesh_histogram);
 void VRML2Writer(MyMesh &mesh,string FileName);
