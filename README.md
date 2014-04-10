@@ -1,6 +1,6 @@
 MeshEditer
 =============
-This program includes reading different formats of 3D data, removing duplicate vertices, and computing the histogram for a 3D model.
+This program includes reading different formats of 3D data, removing duplicate vertices, computing the histogram for a 3D model and writes the resulting file in the VRML V2.0 format.
 
 Compile and run "MeshHistogram/histogram/OpenGLTestOnMFC.sln".   
 "LoadMesh": Load mesh by ".obj", ".off", ".ply" .etc  
